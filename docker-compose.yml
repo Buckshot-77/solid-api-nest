@@ -1,0 +1,9 @@
+services:
+  postgres:
+    container_name: nest-clean-pg
+    image: postgres:alpine
+    ports:
+      - 5432:5432
+    env_file: ".env"
+    volumes:
+      - ./data/pg:/data/postgres
