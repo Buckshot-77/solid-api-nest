@@ -1,14 +1,12 @@
 /* eslint-disable @typescript-eslint/no-unsafe-argument */
-import { AppModule } from '@/app.module'
-import { PrismaService } from '@/prisma/prisma.service'
+import { AppModule } from '@/infra/app.module'
+import { PrismaService } from '@/infra/prisma/prisma.service'
 import { INestApplication } from '@nestjs/common'
 import { JwtService } from '@nestjs/jwt'
 import { Test } from '@nestjs/testing'
-import { hash } from 'argon2'
-
 import request from 'supertest'
 
-describe('Create Question (e2e)', () => {
+describe('Fetch recent questions (E2E)', () => {
   let app: INestApplication
   let prisma: PrismaService
   let jwt: JwtService
@@ -26,35 +24,45 @@ describe('Create Question (e2e)', () => {
     await app.init()
   })
 
-  test('[POST] /questions', async () => {
+  test('[GET] /questions', async () => {
     const user = await prisma.client.user.create({
       data: {
         name: 'John Doe',
         email: 'johndoe@example.com',
-        passwordHash: await hash('12345678910'),
+        passwordHash: '123456',
       },
     })
 
     const accessToken = jwt.sign({ sub: user.id })
 
-    const response = await request(app.getHttpServer())
-      .post('/questions')
-      .set('Authorization', `Bearer ${accessToken}`)
-      .send({
-        title: 'Question title',
-        content: 'this is the content rs',
-      })
-
-    const questionOnDatabase = await prisma.client.question.findFirst({
-      where: { title: 'Question title' },
+    await prisma.client.question.createMany({
+      data: [
+        {
+          title: 'Question 01',
+          slug: 'question-01',
+          content: 'Question content',
+          authorId: user.id,
+        },
+        {
+          title: 'Question 02',
+          slug: 'question-02',
+          content: 'Question content',
+          authorId: user.id,
+        },
+      ],
     })
 
-    expect(response.statusCode).toBe(201)
-    expect(questionOnDatabase).toEqual(
-      expect.objectContaining({
-        title: 'Question title',
-        content: 'this is the content rs',
-      }),
-    )
+    const response = await request(app.getHttpServer())
+      .get('/questions')
+      .set('Authorization', `Bearer ${accessToken}`)
+      .send()
+
+    expect(response.statusCode).toBe(200)
+    expect(response.body).toEqual({
+      questions: [
+        expect.objectContaining({ title: 'Question 01' }),
+        expect.objectContaining({ title: 'Question 02' }),
+      ],
+    })
   })
 })

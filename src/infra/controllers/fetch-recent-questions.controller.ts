@@ -1,10 +1,10 @@
 import { z } from 'zod'
 
 import { Controller, Get, HttpCode, Query, UseGuards } from '@nestjs/common'
-import { PrismaService } from '@/prisma/prisma.service'
+import { PrismaService } from '@/infra/prisma/prisma.service'
 
-import { JwtAuthGuard } from '@/auth/jwt-auth.guard'
-import { ZodValidationPipe } from '@/pipes/zod-validation-pipe'
+import { JwtAuthGuard } from '@/infra/auth/jwt-auth.guard'
+import { ZodValidationPipe } from '@/infra/pipes/zod-validation-pipe'
 
 const paginationValidationSchema = z.object({
   page: z.coerce.number().min(1).optional().default(1),

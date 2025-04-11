@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/no-unsafe-assignment */
 /* eslint-disable @typescript-eslint/no-unsafe-argument */
-import { AppModule } from '@/app.module'
-import { PrismaService } from '@/prisma/prisma.service'
+import { AppModule } from '@/infra/app.module'
+import { PrismaService } from '@/infra/prisma/prisma.service'
 import { INestApplication } from '@nestjs/common'
 import { Test } from '@nestjs/testing'
 import { hash } from 'argon2'

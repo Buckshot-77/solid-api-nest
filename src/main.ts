@@ -1,7 +1,7 @@
 import { NestFactory } from '@nestjs/core'
-import { AppModule } from './app.module'
+import { AppModule } from './infra/app.module'
 import { ConfigService } from '@nestjs/config'
-import { Env } from './config/env.config'
+import { Env } from './infra/config/env.config'
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule)
@@ -10,4 +10,4 @@ async function bootstrap() {
 
   await app.listen(port)
 }
-bootstrap()
+void bootstrap()
