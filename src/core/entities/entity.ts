@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
 import { UniqueIdentifier } from './value-objects/unique-identifier'
 
 export class Entity<EntityProps> {
@@ -14,7 +13,7 @@ export class Entity<EntityProps> {
     this._props = props
   }
 
-  public equals(entity: Entity<any>) {
+  public equals(entity: Entity<unknown>) {
     if (entity === this) {
       return true
     }

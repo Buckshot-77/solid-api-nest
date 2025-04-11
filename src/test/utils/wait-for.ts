@@ -21,7 +21,7 @@ export async function waitFor(
         resolve()
       } catch (err) {
         if (elapsedTime >= maxDuration) {
-          reject(err)
+          reject(err as Error)
         }
       }
     }, 10)
