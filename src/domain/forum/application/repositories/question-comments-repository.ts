@@ -1,4 +1,4 @@
-import { PaginationParams } from '@/core/repository/pagination-params'
+import { PaginationParams } from '@/core/repositories/pagination-params'
 import { QuestionComment } from '@/domain/forum/enterprise/entities/question-comment'
 
 export interface QuestionCommentsRepository {

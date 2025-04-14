@@ -1,4 +1,4 @@
-import { PaginationParams } from '@/core/repository/pagination-params'
+import { PaginationParams } from '@/core/repositories/pagination-params'
 import { NotificationsRepository } from '@/domain/notification/application/repositories/notifications-repository'
 import { Notification } from '@/domain/notification/enterprise/entities/notification'
 

@@ -3,7 +3,7 @@ import { AnswersRepository } from '@/domain/forum/application/repositories/answe
 import { Answer } from '@/domain/forum/enterprise/entities/answer'
 
 import { DomainEvents } from '@/core/events/domain-events'
-import { PaginationParams } from '@/core/repository/pagination-params'
+import { PaginationParams } from '@/core/repositories/pagination-params'
 import { UniqueIdentifier } from '@/core/entities/value-objects/unique-identifier'
 
 export class InMemoryAnswersRepository implements AnswersRepository {
