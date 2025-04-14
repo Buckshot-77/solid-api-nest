@@ -2,7 +2,7 @@ import { PaginationParams } from '@/core/repositories/pagination-params'
 import { AnswerComment } from '@/domain/forum/enterprise/entities/answer-comment'
 
 export interface AnswerCommentsRepository {
-  findById(id: string): Promise<AnswerComment | undefined>
+  findById(id: string): Promise<AnswerComment | null>
   findManyByAnswerId(
     id: string,
     params: PaginationParams,

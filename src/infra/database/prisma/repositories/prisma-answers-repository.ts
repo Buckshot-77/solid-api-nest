@@ -20,7 +20,7 @@ export class PrismaAnswersRepository implements AnswersRepository {
   ): Promise<Answer[]> {
     throw new Error('Method not implemented.')
   }
-  async findById(id: string): Promise<Answer | undefined> {
+  async findById(id: string): Promise<Answer | null> {
     throw new Error('Method not implemented.')
   }
   async findByQuestionId(questionId: string): Promise<Answer[]> {

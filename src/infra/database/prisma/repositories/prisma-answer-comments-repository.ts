@@ -9,7 +9,7 @@ import { AnswerComment } from '@/domain/forum/enterprise/entities/answer-comment
 export class PrismaAnswerCommentsRepository
   implements AnswerCommentsRepository
 {
-  findById(id: string): Promise<AnswerComment | undefined> {
+  findById(id: string): Promise<AnswerComment | null> {
     throw new Error('Method not implemented.')
   }
   findManyByAnswerId(

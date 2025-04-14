@@ -4,5 +4,5 @@ export interface NotificationsRepository {
   create(notification: Notification): Promise<void>
   save(notification: Notification): Promise<void>
   deleteById(id: string): Promise<void>
-  findById(id: string): Promise<Notification | undefined>
+  findById(id: string): Promise<Notification | null>
 }

@@ -6,6 +6,6 @@ export interface QuestionsRepository {
   save(question: Question): Promise<void>
   deleteById(id: string): Promise<void>
   findManyRecent({ page, pageSize }: PaginationParams): Promise<Question[]>
-  findById(id: string): Promise<Question | undefined>
-  findBySlug(slug_text: string): Promise<Question | undefined>
+  findById(id: string): Promise<Question | null>
+  findBySlug(slug_text: string): Promise<Question | null>
 }

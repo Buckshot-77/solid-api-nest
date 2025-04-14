@@ -12,7 +12,7 @@ export class InMemoryQuestionsRepository implements QuestionsRepository {
     private readonly questionAttachmentsRepository: QuestionAttachmentsRepository,
   ) {}
 
-  public async findBySlug(slug_text: string): Promise<Question | undefined> {
+  public async findBySlug(slug_text: string): Promise<Question | null> {
     const foundQuestion = this.questions.find(
       (question) => question.slug === slug_text,
     )
@@ -51,7 +51,7 @@ export class InMemoryQuestionsRepository implements QuestionsRepository {
     this.questions.splice(foundIndex, 1)
   }
 
-  public async findById(id: string): Promise<Question | undefined> {
+  public async findById(id: string): Promise<Question | null> {
     const foundQuestion = this.questions.find((question) => question.id === id)
 
     return foundQuestion

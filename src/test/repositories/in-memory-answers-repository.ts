@@ -30,7 +30,7 @@ export class InMemoryAnswersRepository implements AnswersRepository {
     return foundAnswers
   }
 
-  public async findById(id: string): Promise<Answer | undefined> {
+  public async findById(id: string): Promise<Answer | null> {
     return this.answers.find((answer) => answer.id === id)
   }
 

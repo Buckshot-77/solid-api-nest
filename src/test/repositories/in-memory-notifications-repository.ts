@@ -34,7 +34,7 @@ export class InMemoryNotificationsRepository
     this.notifications.splice(foundIndex, 1)
   }
 
-  public async findById(id: string): Promise<Notification | undefined> {
+  public async findById(id: string): Promise<Notification | null> {
     const foundNotification = this.notifications.find(
       (notification) => notification.id === id,
     )
