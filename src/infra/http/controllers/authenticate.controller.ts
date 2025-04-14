@@ -11,7 +11,7 @@ import {
   UsePipes,
 } from '@nestjs/common'
 import { JwtService } from '@nestjs/jwt'
-import { ZodValidationPipe } from '@/infra/pipes/zod-validation-pipe'
+import { ZodValidationPipe } from '@/infra/http/pipes/zod-validation-pipe'
 import { PrismaService } from '@/infra/prisma/prisma.service'
 
 const authenticateBodySchema = z.object({

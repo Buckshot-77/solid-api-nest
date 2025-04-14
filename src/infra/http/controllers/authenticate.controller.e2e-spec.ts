@@ -1,12 +1,12 @@
-/* eslint-disable @typescript-eslint/no-unsafe-argument */
 import { AppModule } from '@/infra/app.module'
 import { PrismaService } from '@/infra/prisma/prisma.service'
 import { INestApplication } from '@nestjs/common'
 import { Test } from '@nestjs/testing'
+import { hash } from 'argon2'
 
 import request from 'supertest'
 
-describe('Create Account (e2e)', () => {
+describe('Authenticate (e2e)', () => {
   let app: INestApplication
   let prisma: PrismaService
 
@@ -22,18 +22,23 @@ describe('Create Account (e2e)', () => {
     await app.init()
   })
 
-  test('[POST] /accounts', async () => {
-    const response = await request(app.getHttpServer()).post('/accounts').send({
-      name: 'John Doe',
+  test('[POST] /sessions', async () => {
+    await prisma.client.user.create({
+      data: {
+        name: 'John Doe',
+        email: 'johndoe@example.com',
+        passwordHash: await hash('12345678910'),
+      },
+    })
+
+    const response = await request(app.getHttpServer()).post('/sessions').send({
       email: 'johndoe@example.com',
       password: '12345678910',
     })
 
-    const foundUser = await prisma.client.user.findUnique({
-      where: { email: 'johndoe@example.com' },
-    })
-
-    expect(foundUser?.name).toBe('John Doe')
     expect(response.statusCode).toBe(201)
+    expect(response.body).toEqual({
+      access_token: expect.any(String),
+    })
   })
 })

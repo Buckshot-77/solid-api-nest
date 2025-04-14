@@ -4,7 +4,7 @@ import { Controller, Get, HttpCode, Query, UseGuards } from '@nestjs/common'
 import { PrismaService } from '@/infra/prisma/prisma.service'
 
 import { JwtAuthGuard } from '@/infra/auth/jwt-auth.guard'
-import { ZodValidationPipe } from '@/infra/pipes/zod-validation-pipe'
+import { ZodValidationPipe } from '@/infra/http/pipes/zod-validation-pipe'
 
 const paginationValidationSchema = z.object({
   page: z.coerce.number().min(1).optional().default(1),
