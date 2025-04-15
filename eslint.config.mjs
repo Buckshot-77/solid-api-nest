@@ -6,7 +6,7 @@ import tseslint from 'typescript-eslint';
 
 export default tseslint.config(
   {
-    ignores: ['eslint.config.mjs', '**/*.spec.ts', '**/*.e2e-spec.ts'],
+    ignores: ['eslint.config.mjs'],
   },
   eslint.configs.recommended,
   ...tseslint.configs.recommendedTypeChecked,
@@ -33,4 +33,11 @@ export default tseslint.config(
       '@typescript-eslint/require-await': 'off'
     },
   },
+  {
+    files: ["src/**/*.spec.ts", "src/**/*-spec.ts"],
+		rules: {
+			"no-unused-expressions": "off",
+      '@typescript-eslint/no-unsafe-assignment': 'off',
+		},
+  }
 );

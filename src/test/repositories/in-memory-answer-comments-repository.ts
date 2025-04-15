@@ -12,7 +12,7 @@ export class InMemoryAnswerCommentsRepository
       (answerComment) => answerComment.id === id,
     )
 
-    return foundAnswerComment
+    return foundAnswerComment ?? null
   }
 
   public async findManyByAnswerId(

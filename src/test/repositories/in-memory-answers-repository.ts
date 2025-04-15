@@ -31,7 +31,7 @@ export class InMemoryAnswersRepository implements AnswersRepository {
   }
 
   public async findById(id: string): Promise<Answer | null> {
-    return this.answers.find((answer) => answer.id === id)
+    return this.answers.find((answer) => answer.id.toString() === id) ?? null
   }
 
   public async findByQuestionId(questionId: string): Promise<Answer[]> {

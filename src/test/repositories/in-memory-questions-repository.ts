@@ -14,8 +14,10 @@ export class InMemoryQuestionsRepository implements QuestionsRepository {
 
   public async findBySlug(slug_text: string): Promise<Question | null> {
     const foundQuestion = this.questions.find(
-      (question) => question.slug === slug_text,
+      (question) => question.slug.value === slug_text,
     )
+
+    if (!foundQuestion) return null
 
     return foundQuestion
   }
@@ -53,6 +55,8 @@ export class InMemoryQuestionsRepository implements QuestionsRepository {
 
   public async findById(id: string): Promise<Question | null> {
     const foundQuestion = this.questions.find((question) => question.id === id)
+
+    if (!foundQuestion) return null
 
     return foundQuestion
   }

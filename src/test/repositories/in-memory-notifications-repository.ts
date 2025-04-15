@@ -39,6 +39,8 @@ export class InMemoryNotificationsRepository
       (notification) => notification.id === id,
     )
 
+    if (!foundNotification) return null
+
     return foundNotification
   }
 

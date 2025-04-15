@@ -12,6 +12,8 @@ export class InMemoryQuestionCommentsRepository
       (questionComment) => questionComment.id === id,
     )
 
+    if (!foundQuestionComment) return null
+
     return foundQuestionComment
   }
 
