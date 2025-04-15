@@ -1,12 +1,18 @@
-import { Body, Controller, HttpCode, Post, UseGuards } from '@nestjs/common'
-import { PrismaService } from '@/infra/database/prisma/prisma.service'
+import {
+  BadRequestException,
+  Body,
+  Controller,
+  HttpCode,
+  Post,
+  UseGuards,
+} from '@nestjs/common'
 
 import { z } from 'zod'
 import { ZodValidationPipe } from '@/infra/http/pipes/zod-validation-pipe'
 import { JwtAuthGuard } from '@/infra/auth/jwt-auth.guard'
 import { CurrentUser } from '@/infra/auth/current-user-decorator'
 import { UserPayload } from '@/infra/auth/jwt.strategy'
-import { randomUUID } from 'node:crypto'
+import { CreateQuestionUseCase } from '@/domain/forum/application/use-cases/create-question'
 
 const createQuestionBodySchema = z.object({
   title: z.string(),
@@ -20,7 +26,7 @@ type CreateQuestionBodySchema = z.infer<typeof createQuestionBodySchema>
 @Controller('/questions')
 @UseGuards(JwtAuthGuard)
 export class CreateQuestionController {
-  constructor(private prismaService: PrismaService) {}
+  constructor(private readonly createQuestionUseCase: CreateQuestionUseCase) {}
 
   @Post()
   @HttpCode(201)
@@ -32,29 +38,16 @@ export class CreateQuestionController {
     const { title, content } = body
     const { sub: authorId } = user
 
-    const slug = this.convertToSlug(title)
-
-    const id = randomUUID()
-
-    await this.prismaService.client.question.create({
-      data: {
-        id,
-        title,
-        content,
-        slug,
-        authorId,
-      },
+    const result = await this.createQuestionUseCase.execute({
+      title,
+      content,
+      authorId,
     })
 
-    return { id }
-  }
+    if (result.isRight()) {
+      return { id: result.value.question.id }
+    }
 
-  private convertToSlug(source: string): string {
-    return source
-      .toLocaleLowerCase()
-      .normalize('NFD')
-      .replace(/[\u0300-\u036f]/g, '')
-      .replace(/[^\w\s-]/g, '')
-      .replace(/\s+/g, '-')
+    throw new BadRequestException('There was an error creating the question')
   }
 }

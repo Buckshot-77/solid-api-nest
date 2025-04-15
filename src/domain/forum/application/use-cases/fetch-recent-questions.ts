@@ -1,3 +1,5 @@
+import { Injectable } from '@nestjs/common'
+
 import { Either, left, right } from '@/core/types/either'
 
 import { QuestionsRepository } from '@/domain/forum/application/repositories/questions-repository'
@@ -17,6 +19,7 @@ type FetchRecentQuestionsUseCaseResponse = Either<
   }
 >
 
+@Injectable()
 export class FetchRecentQuestionsUseCase {
   constructor(private readonly questionsRepository: QuestionsRepository) {}
   private readonly MAX_PAGE_SIZE = 30

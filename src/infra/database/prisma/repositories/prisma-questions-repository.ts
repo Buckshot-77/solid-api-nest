@@ -32,7 +32,7 @@ export class PrismaQuestionsRepository implements QuestionsRepository {
   }: PaginationParams): Promise<Question[]> {
     const foundQuestions = await this.prisma.client.question.findMany({
       take: pageSize,
-      skip: page - 1 * pageSize,
+      skip: (page - 1) * pageSize,
       orderBy: {
         createdAt: 'desc',
       },
