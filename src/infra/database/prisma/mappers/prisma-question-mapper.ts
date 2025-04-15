@@ -1,4 +1,4 @@
-import { Question as PrismaQuestion } from '@prisma/client'
+import { Question as PrismaQuestion, Prisma } from '@prisma/client'
 
 import { Question } from '@/domain/forum/enterprise/entities/question'
 import { UniqueIdentifier } from '@/core/entities/value-objects/unique-identifier'
@@ -18,5 +18,18 @@ export class PrismaQuestionMapper {
       },
       new UniqueIdentifier(question.id),
     )
+  }
+
+  static toPrisma(question: Question): Prisma.QuestionUncheckedCreateInput {
+    return {
+      id: question.id.toString(),
+      authorId: question.authorId.toString(),
+      bestAnswerId: question.bestAnswerId?.toString(),
+      title: question.title,
+      content: question.content,
+      slug: question.slug.value,
+      createdAt: question.createdAt,
+      updatedAt: question.updatedAt,
+    }
   }
 }

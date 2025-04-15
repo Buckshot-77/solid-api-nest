@@ -21,8 +21,8 @@ export class Question extends AggregateRoot<QuestionProps> {
     return this._props.title
   }
 
-  get slug(): string {
-    return this._props.slug.value
+  get slug(): Slug {
+    return this._props.slug
   }
 
   get content(): string {

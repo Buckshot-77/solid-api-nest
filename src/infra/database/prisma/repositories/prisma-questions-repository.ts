@@ -9,22 +9,38 @@ import { PrismaQuestionMapper } from '../mappers/prisma-question-mapper'
 export class PrismaQuestionsRepository implements QuestionsRepository {
   constructor(private readonly prisma: PrismaService) {}
   async create(question: Question): Promise<void> {
-    throw new Error('Method not implemented.')
+    const data = PrismaQuestionMapper.toPrisma(question)
+
+    await this.prisma.client.question.create({
+      data,
+    })
   }
 
   async save(question: Question): Promise<void> {
-    throw new Error('Method not implemented.')
+    const data = PrismaQuestionMapper.toPrisma(question)
+
+    await this.prisma.client.question.update({ where: { id: data.id }, data })
   }
 
   async deleteById(id: string): Promise<void> {
-    throw new Error('Method not implemented.')
+    await this.prisma.client.question.delete({ where: { id } })
   }
 
   async findManyRecent({
     page,
     pageSize,
   }: PaginationParams): Promise<Question[]> {
-    throw new Error('Method not implemented.')
+    const foundQuestions = await this.prisma.client.question.findMany({
+      take: pageSize,
+      skip: page - 1 * pageSize,
+      orderBy: {
+        createdAt: 'desc',
+      },
+    })
+
+    return foundQuestions.map((question) =>
+      PrismaQuestionMapper.toDomain(question),
+    )
   }
 
   async findById(id: string): Promise<Question | null> {
@@ -42,6 +58,16 @@ export class PrismaQuestionsRepository implements QuestionsRepository {
   }
 
   async findBySlug(slug_text: string): Promise<Question | null> {
-    throw new Error('Method not implemented.')
+    const question = await this.prisma.client.question.findUnique({
+      where: { slug: slug_text },
+    })
+
+    if (!question) {
+      return null
+    }
+
+    const mappedQuestion = PrismaQuestionMapper.toDomain(question)
+
+    return mappedQuestion
   }
 }

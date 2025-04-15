@@ -50,6 +50,6 @@ describe('GetQuestionBySlug unit tests', () => {
     expect(getBySlugSpy).toHaveBeenCalledWith('any-slug-text')
 
     // @ts-expect-error TS doesn't know the type due to a lack of an if statement. This is expected, and the workaround is necessary for the test
-    expect(result.value.question.slug).toBe('any-slug-text')
+    expect(result.value.question.slug.value).toBe('any-slug-text')
   })
 })
