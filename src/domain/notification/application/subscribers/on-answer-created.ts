@@ -11,8 +11,10 @@ export class OnAnswerCreated implements EventHandler {
   ) {
     this.setupSubscriptions()
   }
+
   setupSubscriptions(): void {
     DomainEvents.register(
+      // eslint-disable-next-line @typescript-eslint/no-unsafe-argument
       this.sendNewAnswerNotification.bind(this),
       AnswerCreatedEvent.name,
     )

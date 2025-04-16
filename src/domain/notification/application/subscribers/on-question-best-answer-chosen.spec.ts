@@ -50,12 +50,12 @@ describe('On Question Best Answer Chosen', () => {
     const question = makeQuestion()
     const answer = makeAnswer({ questionId: new UniqueIdentifier(question.id) })
 
-    inMemoryQuestionsRepository.create(question)
-    inMemoryAnswersRepository.create(answer)
+    await inMemoryQuestionsRepository.create(question)
+    await inMemoryAnswersRepository.create(answer)
 
     question.bestAnswerId = new UniqueIdentifier(answer.id)
 
-    inMemoryQuestionsRepository.save(question)
+    await inMemoryQuestionsRepository.save(question)
 
     await waitFor(() => {
       expect(sendNotificationExecuteSpy).toHaveBeenCalled()
