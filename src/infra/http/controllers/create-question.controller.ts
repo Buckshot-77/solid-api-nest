@@ -4,12 +4,10 @@ import {
   Controller,
   HttpCode,
   Post,
-  UseGuards,
 } from '@nestjs/common'
 
 import { z } from 'zod'
 import { ZodValidationPipe } from '@/infra/http/pipes/zod-validation-pipe'
-import { JwtAuthGuard } from '@/infra/auth/jwt-auth.guard'
 import { CurrentUser } from '@/infra/auth/current-user-decorator'
 import { UserPayload } from '@/infra/auth/jwt.strategy'
 import { CreateQuestionUseCase } from '@/domain/forum/application/use-cases/create-question'
@@ -24,7 +22,6 @@ const bodyValidationPipe = new ZodValidationPipe(createQuestionBodySchema)
 type CreateQuestionBodySchema = z.infer<typeof createQuestionBodySchema>
 
 @Controller('/questions')
-@UseGuards(JwtAuthGuard)
 export class CreateQuestionController {
   constructor(private readonly createQuestionUseCase: CreateQuestionUseCase) {}
 
@@ -44,10 +41,10 @@ export class CreateQuestionController {
       authorId,
     })
 
-    if (result.isRight()) {
-      return { id: result.value.question.id }
+    if (result.isLeft()) {
+      throw new BadRequestException()
     }
 
-    throw new BadRequestException('There was an error creating the question')
+    return { id: result.value.question.id }
   }
 }
