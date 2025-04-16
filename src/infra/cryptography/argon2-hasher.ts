@@ -8,7 +8,7 @@ export class Argon2Hasher implements HashGenerator, HashComparer {
   async hash(plainText: string): Promise<string> {
     return hash(plainText)
   }
-  async compare(plain: string, hash: string): Promise<boolean> {
-    return verify(plain, hash)
+  async compare(hash: string, plain: string): Promise<boolean> {
+    return verify(hash, plain)
   }
 }
