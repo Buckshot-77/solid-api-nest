@@ -29,16 +29,16 @@ export class Question extends AggregateRoot<QuestionProps> {
     return this._props.content
   }
 
-  get authorId(): string {
-    return this._props.authorId.toString()
+  get authorId(): UniqueIdentifier {
+    return this._props.authorId
   }
 
   get preview(): string {
     return this.content.slice(0, 120).trimEnd()
   }
 
-  get bestAnswerId(): string | undefined {
-    return this._props.bestAnswerId?.toString()
+  get bestAnswerId(): UniqueIdentifier | undefined {
+    return this._props.bestAnswerId
   }
 
   get isNew(): boolean {

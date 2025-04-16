@@ -23,7 +23,7 @@ export class InMemoryAnswersRepository implements AnswersRepository {
     { page, pageSize }: PaginationParams,
   ): Promise<Answer[]> {
     const foundAnswers = this.answers
-      .filter((answer) => answer.questionId === questionId)
+      .filter((answer) => answer.questionId.toString() === questionId)
       .sort((a, b) => b.createdAt.getTime() - a.createdAt.getTime())
       .slice((page - 1) * pageSize, page * pageSize)
 
@@ -36,7 +36,7 @@ export class InMemoryAnswersRepository implements AnswersRepository {
 
   public async findByQuestionId(questionId: string): Promise<Answer[]> {
     const filteredAnswers = this.answers.filter(
-      (answer) => answer.questionId === questionId,
+      (answer) => answer.questionId.toString() === questionId,
     )
 
     return filteredAnswers

@@ -95,7 +95,7 @@ describe('Choose Best Answer unit tests', () => {
 
     const result = await chooseBestAnswerUseCase.execute({
       answerId: createdAnswer.id,
-      questionAuthorId: createdQuestion.authorId,
+      questionAuthorId: createdQuestion.authorId.toString(),
     })
 
     expect(result.isRight()).toBe(true)

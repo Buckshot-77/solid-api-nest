@@ -5,7 +5,7 @@ export interface CommentProps {
   authorId: UniqueIdentifier
   content: string
   createdAt: Date
-  updatedAt?: Date
+  updatedAt?: Date | null
 }
 
 export class Comment<Props extends CommentProps> extends Entity<Props> {
@@ -13,15 +13,15 @@ export class Comment<Props extends CommentProps> extends Entity<Props> {
     return this._props.content
   }
 
-  get authorId(): string {
-    return this._props.authorId.toString()
+  get authorId(): UniqueIdentifier {
+    return this._props.authorId
   }
 
   get createdAt(): Date {
     return this._props.createdAt
   }
 
-  get updatedAt(): Date | undefined {
+  get updatedAt(): Date | undefined | null {
     return this._props.updatedAt
   }
 

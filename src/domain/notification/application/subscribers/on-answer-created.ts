@@ -20,11 +20,13 @@ export class OnAnswerCreated implements EventHandler {
     )
   }
   private async sendNewAnswerNotification({ answer }: AnswerCreatedEvent) {
-    const question = await this.questionsRepository.findById(answer.questionId)
+    const question = await this.questionsRepository.findById(
+      answer.questionId.toString(),
+    )
 
     if (question) {
       await this.sendNotification.execute({
-        recipientId: question.authorId,
+        recipientId: question.authorId.toString(),
         title: `Nova resposta em ${question.title.substring(0, 40).concat('...')}`,
         content: answer.preview,
       })

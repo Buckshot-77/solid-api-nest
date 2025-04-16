@@ -8,9 +8,9 @@ export interface AnswerProps {
   content: string
   authorId: UniqueIdentifier
   questionId: UniqueIdentifier
-  attachments?: AnswerAttachmentList
+  attachments?: AnswerAttachmentList | null
   createdAt: Date
-  updatedAt?: Date
+  updatedAt?: Date | null
 }
 
 export class Answer extends AggregateRoot<AnswerProps> {
@@ -18,12 +18,12 @@ export class Answer extends AggregateRoot<AnswerProps> {
     return this._props.content
   }
 
-  get authorId(): string {
-    return this._props.authorId.toString()
+  get authorId(): UniqueIdentifier {
+    return this._props.authorId
   }
 
-  get questionId(): string {
-    return this._props.questionId.toString()
+  get questionId(): UniqueIdentifier {
+    return this._props.questionId
   }
 
   get createdAt(): Date {
@@ -34,7 +34,7 @@ export class Answer extends AggregateRoot<AnswerProps> {
     return this._props.attachments ?? new AnswerAttachmentList()
   }
 
-  get updatedAt(): Date | undefined {
+  get updatedAt(): Date | undefined | null {
     return this._props.updatedAt
   }
 

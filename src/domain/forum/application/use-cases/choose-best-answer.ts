@@ -36,13 +36,13 @@ export class ChooseBestAnswerUseCase {
     }
 
     const foundQuestion = await this.questionsRepository.findById(
-      foundAnswer.questionId,
+      foundAnswer.questionId.toString(),
     )
 
     if (!foundQuestion) {
       return left(new ResourceNotFoundError('Question was not found'))
     }
-    if (foundQuestion.authorId !== questionAuthorId) {
+    if (foundQuestion.authorId.toString() !== questionAuthorId) {
       return left(new NotAllowedError('Question is not from this author'))
     }
 

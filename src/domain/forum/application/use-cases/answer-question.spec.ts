@@ -2,6 +2,7 @@ import { expect, describe, it, beforeEach } from 'vitest'
 import { AnswerQuestionUseCase } from '@/domain/forum/application/use-cases/answer-question'
 import { InMemoryAnswersRepository } from '@/test/repositories/in-memory-answers-repository'
 import { InMemoryAnswerAttachmentsRepository } from '@/test/repositories/in-memory-answer-attachments-repository'
+import { UniqueIdentifier } from '@/core/entities/value-objects/unique-identifier'
 
 describe('AnswerQuestion unit tests', () => {
   let answerQuestionUseCase: AnswerQuestionUseCase
@@ -26,7 +27,11 @@ describe('AnswerQuestion unit tests', () => {
 
     expect(result.isRight()).toBe(true)
     expect(result.value?.answer.content).toEqual('Any content')
-    expect(result.value?.answer.authorId).toEqual('any author id')
-    expect(result.value?.answer.questionId).toEqual('any question id')
+    expect(result.value?.answer.authorId).toEqual(
+      new UniqueIdentifier('any author id'),
+    )
+    expect(result.value?.answer.questionId).toEqual(
+      new UniqueIdentifier('any question id'),
+    )
   })
 })
