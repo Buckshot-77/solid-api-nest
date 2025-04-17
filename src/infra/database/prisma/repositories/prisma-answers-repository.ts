@@ -51,14 +51,6 @@ export class PrismaAnswersRepository implements AnswersRepository {
     return PrismaAnswerMapper.toDomain(foundAnswer)
   }
 
-  async findByQuestionId(questionId: string): Promise<Answer[]> {
-    const foundAnswers = await this.prisma.client.answer.findMany({
-      where: { questionId },
-    })
-
-    return foundAnswers.map((question) => PrismaAnswerMapper.toDomain(question))
-  }
-
   async deleteById(id: string): Promise<void> {
     await this.prisma.client.answer.delete({
       where: { id },

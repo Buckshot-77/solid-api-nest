@@ -24,7 +24,6 @@ const commonBetweenImportsAndExports = [
   PrismaAnswerAttachmentsRepository,
   PrismaAnswerCommentsRepository,
   PrismaQuestionCommentsRepository,
-  PrismaQuestionsRepository,
   PrismaAnswersRepository,
 ]
 
