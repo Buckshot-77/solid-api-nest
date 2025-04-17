@@ -34,14 +34,6 @@ export class InMemoryAnswersRepository implements AnswersRepository {
     return this.answers.find((answer) => answer.id.toString() === id) ?? null
   }
 
-  public async findByQuestionId(questionId: string): Promise<Answer[]> {
-    const filteredAnswers = this.answers.filter(
-      (answer) => answer.questionId.toString() === questionId,
-    )
-
-    return filteredAnswers
-  }
-
   public async save(answer: Answer): Promise<void> {
     const foundAnswerIndex = this.answers.findIndex(
       (iteratedAnswer) => iteratedAnswer.id === answer.id,

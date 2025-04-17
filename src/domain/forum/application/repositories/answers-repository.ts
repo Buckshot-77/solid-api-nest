@@ -9,6 +9,5 @@ export interface AnswersRepository {
     paginationParams: PaginationParams,
   ): Promise<Answer[]>
   findById(id: string): Promise<Answer | null>
-  findByQuestionId(questionId: string): Promise<Answer[]>
   deleteById(id: string): Promise<void>
 }
