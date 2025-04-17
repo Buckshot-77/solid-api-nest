@@ -10,6 +10,7 @@ import { QuestionAttachmentList } from '@/domain/forum/enterprise/entities/quest
 import { ResourceNotFoundError } from '@/domain/forum/application/use-cases/errors/resource-not-found-error'
 import { NotAllowedError } from '@/domain/forum/application/use-cases/errors/not-allowed-error'
 import { QuestionAttachmentsRepository } from '../repositories/question-attachments-repository'
+import { Injectable } from '@nestjs/common'
 
 export interface EditQuestionRequest {
   questionId: string
@@ -26,6 +27,7 @@ type EditQuestionResponse = Either<
   }
 >
 
+@Injectable()
 export class EditQuestionUseCase {
   constructor(
     private readonly questionsRepository: QuestionsRepository,
