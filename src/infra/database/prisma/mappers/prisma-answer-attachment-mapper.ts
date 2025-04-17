@@ -1,32 +1,18 @@
-import { Attachment as PrismaAnswerAttachment, Prisma } from '@prisma/client'
+import { Attachment as PrismaAttachment } from '@prisma/client'
 
 import { AnswerAttachment } from '@/domain/forum/enterprise/entities/answer-attachment'
 import { UniqueIdentifier } from '@/core/entities/value-objects/unique-identifier'
 
 export class PrismaAnswerAttachmentMapper {
-  static toDomain(answerAttachment: PrismaAnswerAttachment): AnswerAttachment {
-    if (!answerAttachment.answerId) throw new Error('Invalid attachment type.')
+  static toDomain(raw: PrismaAttachment): AnswerAttachment {
+    if (!raw.answerId) throw new Error('Invalid attachment')
+
     return AnswerAttachment.create(
       {
-        answerId: new UniqueIdentifier(answerAttachment.answerId),
-        authorId: new UniqueIdentifier(answerAttachment.authorId),
-        content: answerAttachment.content,
-        createdAt: answerAttachment.createdAt,
-        updatedAt: answerAttachment.updatedAt,
+        attachmentId: new UniqueIdentifier(raw.id),
+        answerId: new UniqueIdentifier(raw.answerId),
       },
-      new UniqueIdentifier(answerAttachment.id),
+      new UniqueIdentifier(raw.id),
     )
-  }
-
-  static toPrisma(
-    answerAttachment: AnswerAttachment,
-  ): Prisma.AttachmentUncheckedCreateInput {
-    return {
-      id: answerAttachment.id.toString(),
-      authorId: answerAttachment.authorId.toString(),
-      content: answerAttachment.content,
-      createdAt: answerAttachment.createdAt,
-      updatedAt: answerAttachment.updatedAt,
-    }
   }
 }
