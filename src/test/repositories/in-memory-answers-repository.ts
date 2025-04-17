@@ -4,7 +4,6 @@ import { Answer } from '@/domain/forum/enterprise/entities/answer'
 
 import { DomainEvents } from '@/core/events/domain-events'
 import { PaginationParams } from '@/core/repositories/pagination-params'
-import { UniqueIdentifier } from '@/core/entities/value-objects/unique-identifier'
 
 export class InMemoryAnswersRepository implements AnswersRepository {
   public answers: Answer[] = []
@@ -15,7 +14,7 @@ export class InMemoryAnswersRepository implements AnswersRepository {
 
   public async create(answer: Answer): Promise<void> {
     this.answers.push(answer)
-    DomainEvents.dispatchEventsForAggregate(new UniqueIdentifier(answer.id))
+    DomainEvents.dispatchEventsForAggregate(answer.id)
   }
 
   public async findManyByQuestionId(
@@ -40,11 +39,13 @@ export class InMemoryAnswersRepository implements AnswersRepository {
     )
 
     this.answers[foundAnswerIndex] = answer
-    DomainEvents.dispatchEventsForAggregate(new UniqueIdentifier(answer.id))
+    DomainEvents.dispatchEventsForAggregate(answer.id)
   }
 
   public async deleteById(id: string): Promise<void> {
-    const foundIndex = this.answers.findIndex((answer) => answer.id === id)
+    const foundIndex = this.answers.findIndex(
+      (answer) => answer.id.toString() === id,
+    )
 
     if (foundIndex === -1) {
       return

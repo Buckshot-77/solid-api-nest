@@ -43,7 +43,7 @@ export class EditQuestionUseCase {
 
     if (!foundQuestion)
       return left(new ResourceNotFoundError('Question was not found'))
-    if (foundQuestion.authorId !== authorId)
+    if (foundQuestion.authorId.toString() !== authorId)
       return left(new NotAllowedError('Question is not from this author'))
 
     const currentQuestionAttachments =
@@ -55,7 +55,7 @@ export class EditQuestionUseCase {
     const questionAttachmentsFromRequest = attachmentIds.map((attachmentId) => {
       return QuestionAttachment.create({
         attachmentId: new UniqueIdentifier(attachmentId),
-        questionId: new UniqueIdentifier(foundQuestion.id),
+        questionId: foundQuestion.id,
       })
     })
 

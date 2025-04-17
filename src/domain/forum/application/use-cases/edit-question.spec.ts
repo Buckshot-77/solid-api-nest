@@ -35,7 +35,7 @@ describe('EditQuestion unit tests', () => {
     await inMemoryQuestionsRepository.create(createdQuestion)
 
     const result = await editQuestionUseCase.execute({
-      authorId: createdQuestion.authorId,
+      authorId: createdQuestion.authorId.toString(),
       questionId: 'any-question-id',
       newContent: 'new-content',
       title: 'new-title',
@@ -54,7 +54,7 @@ describe('EditQuestion unit tests', () => {
 
     const result = await editQuestionUseCase.execute({
       authorId: 'another-author-id',
-      questionId: createdQuestion.id,
+      questionId: createdQuestion.id.toString(),
       newContent: 'new-content',
       title: 'new-title',
       attachmentIds: ['1', '2'],
@@ -72,18 +72,18 @@ describe('EditQuestion unit tests', () => {
 
     inMemoryQuestionAttachmentsRepository.questionAttachments.push(
       makeQuestionAttachment({
-        questionId: new UniqueIdentifier(createdQuestion.id),
+        questionId: new UniqueIdentifier(createdQuestion.id.toString()),
         attachmentId: new UniqueIdentifier('1'),
       }),
       makeQuestionAttachment({
-        questionId: new UniqueIdentifier(createdQuestion.id),
+        questionId: new UniqueIdentifier(createdQuestion.id.toString()),
         attachmentId: new UniqueIdentifier('2'),
       }),
     )
 
     const result = await editQuestionUseCase.execute({
-      authorId: createdQuestion.authorId,
-      questionId: createdQuestion.id,
+      authorId: createdQuestion.authorId.toString(),
+      questionId: createdQuestion.id.toString(),
       newContent: 'new-content',
       title: 'new-title',
       attachmentIds: ['1', '3'],

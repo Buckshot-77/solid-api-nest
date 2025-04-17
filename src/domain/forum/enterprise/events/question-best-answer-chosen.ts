@@ -14,6 +14,6 @@ export class QuestionBestAnswerChosenEvent implements DomainEvent {
   }
 
   getAggregateId(): UniqueIdentifier {
-    return new UniqueIdentifier(this.question.id)
+    return this.question.id
   }
 }

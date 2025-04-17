@@ -24,7 +24,7 @@ export class InMemoryNotificationsRepository
 
   public async deleteById(id: string): Promise<void> {
     const foundIndex = this.notifications.findIndex(
-      (notification) => notification.id === id,
+      (notification) => notification.id.toString() === id,
     )
 
     if (foundIndex === -1) {
@@ -36,7 +36,7 @@ export class InMemoryNotificationsRepository
 
   public async findById(id: string): Promise<Notification | null> {
     const foundNotification = this.notifications.find(
-      (notification) => notification.id === id,
+      (notification) => notification.id.toString() === id,
     )
 
     if (!foundNotification) return null

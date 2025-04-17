@@ -12,6 +12,6 @@ export class AnswerCreatedEvent implements DomainEvent {
   }
 
   getAggregateId(): UniqueIdentifier {
-    return new UniqueIdentifier(this.answer.id)
+    return this.answer.id
   }
 }

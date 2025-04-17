@@ -14,7 +14,7 @@ class CustomAggregateCreated implements DomainEvent {
   }
 
   public getAggregateId(): UniqueIdentifier {
-    return new UniqueIdentifier(this.aggregate.id)
+    return this.aggregate.id
   }
 }
 
@@ -42,7 +42,7 @@ describe('domain events', () => {
     expect(aggregate.domainEvents).toHaveLength(1)
 
     // Estou salvando a resposta no banco de dados e assim disparando o evento
-    DomainEvents.dispatchEventsForAggregate(new UniqueIdentifier(aggregate.id))
+    DomainEvents.dispatchEventsForAggregate(aggregate.id)
 
     // O subscriber ouve o evento e faz o que precisa ser feito com o dado
     expect(callbackSpy).toHaveBeenCalled()

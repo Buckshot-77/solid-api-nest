@@ -28,7 +28,7 @@ export class DeleteAnswerUseCase {
         new ResourceNotFoundError('No answer was found with the given ID'),
       )
 
-    if (foundAnswer.authorId !== authorId)
+    if (foundAnswer.authorId.toString() !== authorId)
       return left(new NotAllowedError('User not allowed to delete this answer'))
 
     await this.answersRepository.deleteById(answerId)

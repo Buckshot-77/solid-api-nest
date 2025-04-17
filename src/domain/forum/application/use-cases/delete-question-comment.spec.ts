@@ -23,19 +23,19 @@ describe('DeleteQuestionComment unit tests', () => {
     await inMemoryQuestionCommentsRepository.create(createdQuestionComment)
 
     const foundQuestion = await inMemoryQuestionCommentsRepository.findById(
-      createdQuestionComment.id,
+      createdQuestionComment.id.toString(),
     )
 
     expect(foundQuestion).toEqual(createdQuestionComment)
 
     const result = await deleteQuestionCommentUseCase.execute({
-      questionCommentId: createdQuestionComment.id,
-      authorId: createdQuestionComment.authorId,
+      questionCommentId: createdQuestionComment.id.toString(),
+      authorId: createdQuestionComment.authorId.toString(),
     })
 
     const foundQuestionAfterDeletion =
       await inMemoryQuestionCommentsRepository.findById(
-        createdQuestionComment.id,
+        createdQuestionComment.id.toString(),
       )
 
     expect(result.isRight()).toBe(true)
@@ -48,7 +48,7 @@ describe('DeleteQuestionComment unit tests', () => {
 
     const result = await deleteQuestionCommentUseCase.execute({
       authorId: 'any-author-id-that-is-not-the-creator',
-      questionCommentId: createdQuestionComment.id,
+      questionCommentId: createdQuestionComment.id.toString(),
     })
 
     expect(result.isLeft()).toBe(true)

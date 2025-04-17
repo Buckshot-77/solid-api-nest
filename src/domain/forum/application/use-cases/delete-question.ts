@@ -28,7 +28,7 @@ export class DeleteQuestionUseCase {
         new ResourceNotFoundError('No question was found with the given ID'),
       )
 
-    if (foundQuestion.authorId !== authorId)
+    if (foundQuestion.authorId.toString() !== authorId)
       return left(
         new NotAllowedError('User not allowed to delete this question'),
       )

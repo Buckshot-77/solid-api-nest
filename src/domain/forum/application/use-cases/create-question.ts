@@ -41,7 +41,7 @@ export class CreateQuestionUseCase {
     const questionAttachments = attachmentIds.map((questionAttachmentId) => {
       return QuestionAttachment.create({
         attachmentId: new UniqueIdentifier(questionAttachmentId),
-        questionId: new UniqueIdentifier(question.id),
+        questionId: question.id,
       })
     })
 

@@ -30,7 +30,7 @@ export class DeleteQuestionCommentUseCase {
         new ResourceNotFoundError('No question was found with the given ID'),
       )
 
-    if (foundQuestionComment.authorId !== authorId)
+    if (foundQuestionComment.authorId.toString() !== authorId)
       return left(
         new NotAllowedError('User not allowed to delete this comment'),
       )

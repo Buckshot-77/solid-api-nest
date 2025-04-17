@@ -45,6 +45,6 @@ export class CreateQuestionController {
       throw new BadRequestException()
     }
 
-    return { id: result.value.question.id }
+    return { id: result.value.question.id.toString() }
   }
 }

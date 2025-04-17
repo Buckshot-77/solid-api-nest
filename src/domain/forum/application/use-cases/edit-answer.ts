@@ -41,7 +41,7 @@ export class EditAnswerUseCase {
 
     if (!foundAnswer)
       return left(new ResourceNotFoundError('Answer was not found'))
-    if (foundAnswer.authorId !== authorId)
+    if (foundAnswer.authorId.toString() !== authorId)
       return left(new NotAllowedError('Answer is not from this author'))
 
     const currentAnswerAttachments =
@@ -53,7 +53,7 @@ export class EditAnswerUseCase {
     const answerAttachmentsFromRequest = attachmentIds.map((attachmentId) => {
       return AnswerAttachment.create({
         attachmentId: new UniqueIdentifier(attachmentId),
-        answerId: new UniqueIdentifier(foundAnswer.id),
+        answerId: foundAnswer.id,
       })
     })
 

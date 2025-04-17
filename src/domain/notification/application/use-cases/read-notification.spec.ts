@@ -27,7 +27,7 @@ describe('Read Notification', () => {
     await inMemoryNotificationsRepository.create(createdNotification)
 
     const result = await readNotificationUseCase.execute({
-      notificationId: createdNotification.id,
+      notificationId: createdNotification.id.toString(),
       recipientId: 'my-unique-identifier',
     })
 
@@ -65,7 +65,7 @@ describe('Read Notification', () => {
     await inMemoryNotificationsRepository.create(createdNotification)
 
     const result = await readNotificationUseCase.execute({
-      notificationId: createdNotification.id,
+      notificationId: createdNotification.id.toString(),
       recipientId: 'my-unique-identifier-2',
     })
 

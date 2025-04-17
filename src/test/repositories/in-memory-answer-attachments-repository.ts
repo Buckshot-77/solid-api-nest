@@ -10,14 +10,14 @@ export class InMemoryAnswerAttachmentsRepository
     answerId: string,
   ): Promise<AnswerAttachment[]> {
     return this.answerAttachments.filter(
-      (attachment) => answerId === attachment.answerId,
+      (attachment) => answerId === attachment.answerId.toString(),
     )
   }
 
   public async deleteManyByAnswerId(answerId: string) {
     const answerAttachments = this.answerAttachments.filter(
       (answerAttachment) => {
-        return answerAttachment.answerId !== answerId
+        return answerAttachment.answerId.toString() !== answerId
       },
     )
 

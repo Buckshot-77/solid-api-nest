@@ -9,9 +9,7 @@ export class DomainEvents {
   private static markedAggregates: AggregateRoot<unknown>[] = []
 
   public static markAggregateForDispatch(aggregate: AggregateRoot<unknown>) {
-    const aggregateFound = !!this.findMarkedAggregateByID(
-      new UniqueIdentifier(aggregate.id),
-    )
+    const aggregateFound = !!this.findMarkedAggregateByID(aggregate.id)
 
     if (!aggregateFound) {
       this.markedAggregates.push(aggregate)
@@ -34,7 +32,7 @@ export class DomainEvents {
     id: UniqueIdentifier,
   ): AggregateRoot<unknown> | undefined {
     return this.markedAggregates.find((aggregate) => {
-      const idToCompare = new UniqueIdentifier(aggregate.id)
+      const idToCompare = aggregate.id
       return idToCompare.equals(id)
     })
   }

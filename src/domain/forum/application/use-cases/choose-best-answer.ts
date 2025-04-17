@@ -1,6 +1,5 @@
 import { Either, left, right } from '@/core/types/either'
 
-import { UniqueIdentifier } from '@/core/entities/value-objects/unique-identifier'
 import { AnswersRepository } from '@/domain/forum/application/repositories/answers-repository'
 import { QuestionsRepository } from '@/domain/forum/application/repositories/questions-repository'
 
@@ -46,10 +45,13 @@ export class ChooseBestAnswerUseCase {
       return left(new NotAllowedError('Question is not from this author'))
     }
 
-    foundQuestion.bestAnswerId = new UniqueIdentifier(foundAnswer.id)
+    foundQuestion.bestAnswerId = foundAnswer.id
 
     await this.questionsRepository.save(foundQuestion)
 
-    return right({ bestAnswerId: foundAnswer.id, questionId: foundQuestion.id })
+    return right({
+      bestAnswerId: foundAnswer.id.toString(),
+      questionId: foundQuestion.id.toString(),
+    })
   }
 }

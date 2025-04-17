@@ -9,7 +9,6 @@ import { SendNotificationUseCase } from '../use-cases/send-notification'
 import { InMemoryQuestionAttachmentsRepository } from '@/test/repositories/in-memory-question-attachments-repository'
 import { InMemoryNotificationsRepository } from '@/test/repositories/in-memory-notifications-repository'
 import { makeQuestion } from '@/test/factories/make-question'
-import { UniqueIdentifier } from '@/core/entities/value-objects/unique-identifier'
 
 let inMemoryNotificationsRepository: InMemoryNotificationsRepository
 let inMemoryQuestionAttachmentsRepository: InMemoryQuestionAttachmentsRepository
@@ -40,7 +39,7 @@ describe('On Answer Created', () => {
 
   it('should send a notification when an answer is created', async () => {
     const question = makeQuestion()
-    const answer = makeAnswer({ questionId: new UniqueIdentifier(question.id) })
+    const answer = makeAnswer({ questionId: question.id })
 
     const sendNotificationSpy = vi.spyOn(sendNotificationUseCase, 'execute')
 

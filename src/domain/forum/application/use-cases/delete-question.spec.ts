@@ -32,27 +32,27 @@ describe('DeleteQuestion unit tests', () => {
     await inMemoryQuestionsRepository.create(createdQuestion)
 
     const foundQuestion = await inMemoryQuestionsRepository.findById(
-      createdQuestion.id,
+      createdQuestion.id.toString(),
     )
 
     expect(foundQuestion).toEqual(createdQuestion)
 
     inMemoryQuestionAttachmentsRepository.questionAttachments.push(
       makeQuestionAttachment({
-        questionId: new UniqueIdentifier(createdQuestion.id),
+        questionId: new UniqueIdentifier(createdQuestion.id.toString()),
       }),
       makeQuestionAttachment({
-        questionId: new UniqueIdentifier(createdQuestion.id),
+        questionId: new UniqueIdentifier(createdQuestion.id.toString()),
       }),
     )
 
     const result = await deleteQuestionUseCase.execute({
-      questionId: createdQuestion.id,
-      authorId: createdQuestion.authorId,
+      questionId: createdQuestion.id.toString(),
+      authorId: createdQuestion.authorId.toString(),
     })
 
     const foundQuestionAfterDeletion =
-      await inMemoryQuestionsRepository.findById(createdQuestion.id)
+      await inMemoryQuestionsRepository.findById(createdQuestion.id.toString())
 
     expect(result.isRight()).toBe(true)
     expect(foundQuestionAfterDeletion).not.toBeTruthy()
@@ -67,7 +67,7 @@ describe('DeleteQuestion unit tests', () => {
 
     const result = await deleteQuestionUseCase.execute({
       authorId: 'any-author-id-that-is-not-the-creator',
-      questionId: createdQuestion.id,
+      questionId: createdQuestion.id.toString(),
     })
 
     expect(result.isLeft()).toBe(true)

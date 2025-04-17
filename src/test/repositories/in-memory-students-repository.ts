@@ -19,7 +19,7 @@ export class InMemoryStudentsRepository implements StudentsRepository {
 
   async deleteById(id: string): Promise<void> {
     const foundIndex = this.students.findIndex(
-      (notification) => notification.id === id,
+      (notification) => notification.id.toString() === id,
     )
 
     if (foundIndex === -1) {

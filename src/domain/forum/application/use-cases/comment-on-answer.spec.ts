@@ -43,7 +43,7 @@ describe('CommentOnAnswer unit tests', () => {
     const result = await commentOnAnswerUseCase.execute({
       authorId: 'any-author-id',
       content: 'any-content',
-      answerId: createdAnswer.id,
+      answerId: createdAnswer.id.toString(),
     })
 
     expect(result.isRight()).toBe(true)

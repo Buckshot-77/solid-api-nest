@@ -55,7 +55,7 @@ describe('Choose Best Answer unit tests', () => {
     await answersRepository.create(createdAnswer)
 
     const result = await chooseBestAnswerUseCase.execute({
-      answerId: createdAnswer.id,
+      answerId: createdAnswer.id.toString(),
       questionAuthorId: 'any-question-author-id',
     })
     expect(result.isLeft()).toBe(true)
@@ -67,14 +67,14 @@ describe('Choose Best Answer unit tests', () => {
   it('should return NotAllowedError if answer and question are found, but the authorId does not match the given authorId', async () => {
     const createdQuestion = makeQuestion()
     const createdAnswer = makeAnswer({
-      questionId: new UniqueIdentifier(createdQuestion.id),
+      questionId: new UniqueIdentifier(createdQuestion.id.toString()),
     })
 
     await questionsRepository.create(createdQuestion)
     await answersRepository.create(createdAnswer)
 
     const result = await chooseBestAnswerUseCase.execute({
-      answerId: createdAnswer.id,
+      answerId: createdAnswer.id.toString(),
       questionAuthorId: 'any-question-author-id',
     })
 
@@ -87,21 +87,21 @@ describe('Choose Best Answer unit tests', () => {
   it('should be able to choose best answer if all previous conditions are met', async () => {
     const createdQuestion = makeQuestion()
     const createdAnswer = makeAnswer({
-      questionId: new UniqueIdentifier(createdQuestion.id),
+      questionId: new UniqueIdentifier(createdQuestion.id.toString()),
     })
 
     await questionsRepository.create(createdQuestion)
     await answersRepository.create(createdAnswer)
 
     const result = await chooseBestAnswerUseCase.execute({
-      answerId: createdAnswer.id,
+      answerId: createdAnswer.id.toString(),
       questionAuthorId: createdQuestion.authorId.toString(),
     })
 
     expect(result.isRight()).toBe(true)
     expect(result.value).toEqual({
-      questionId: createdQuestion.id,
-      bestAnswerId: createdAnswer.id,
+      questionId: createdQuestion.id.toString(),
+      bestAnswerId: createdAnswer.id.toString(),
     })
   })
 })

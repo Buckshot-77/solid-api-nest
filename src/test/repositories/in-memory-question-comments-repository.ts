@@ -9,7 +9,7 @@ export class InMemoryQuestionCommentsRepository
 
   public async findById(id: string): Promise<QuestionComment | null> {
     const foundQuestionComment = this.questionComments.find(
-      (questionComment) => questionComment.id === id,
+      (questionComment) => questionComment.id.toString() === id,
     )
 
     if (!foundQuestionComment) return null
@@ -35,7 +35,7 @@ export class InMemoryQuestionCommentsRepository
 
   public async deleteById(id: string): Promise<void> {
     const foundIndex = this.questionComments.findIndex(
-      (questionComment) => questionComment.id === id,
+      (questionComment) => questionComment.id.toString() === id,
     )
 
     if (foundIndex === -1) {
