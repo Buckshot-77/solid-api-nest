@@ -1,21 +1,18 @@
 import { z } from 'zod'
-
 import {
   BadRequestException,
   Body,
   Controller,
-  Get,
   HttpCode,
   Param,
+  Put,
 } from '@nestjs/common'
 
 import { EditQuestionUseCase } from '@/domain/forum/application/use-cases/edit-question'
-
 import { CurrentUser } from '@/infra/auth/current-user-decorator'
 import { UserPayload } from '@/infra/auth/jwt.strategy'
 
 import { ZodValidationPipe } from '../pipes/zod-validation-pipe'
-
 import { QuestionPresenter } from '../presenters/question-presenter'
 
 const editQuestionBodySchema = z.object({
@@ -31,8 +28,8 @@ type EditQuestionBodySchema = z.infer<typeof editQuestionBodySchema>
 export class EditQuestionController {
   constructor(private editQuestion: EditQuestionUseCase) {}
 
-  @Get()
-  @HttpCode(200)
+  @Put()
+  @HttpCode(204)
   async handle(
     @Param('id') id: string,
     @CurrentUser() user: UserPayload,
