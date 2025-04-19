@@ -29,7 +29,7 @@ export class EditQuestionController {
   constructor(private editQuestion: EditQuestionUseCase) {}
 
   @Put()
-  @HttpCode(204)
+  @HttpCode(200)
   async handle(
     @Param('id') id: string,
     @CurrentUser() user: UserPayload,

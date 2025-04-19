@@ -10,7 +10,7 @@ import { PrismaService } from '@/infra/database/prisma/prisma.service'
 import { QuestionFactory } from '@/test/factories/make-question'
 import { StudentFactory } from '@/test/factories/make-student'
 
-describe('Edit question (E2E)', () => {
+describe('Delete question (E2E)', () => {
   let app: INestApplication
   let prisma: PrismaService
   let studentFactory: StudentFactory
@@ -33,7 +33,7 @@ describe('Edit question (E2E)', () => {
     await app.init()
   })
 
-  test('[PUT] /questions/:id', async () => {
+  test('[DELETE] /questions/:id', async () => {
     const user = await studentFactory.makePrismaStudent()
     const question = await questionFactory.makePrismaQuestion({
       authorId: user.id,
@@ -44,27 +44,18 @@ describe('Edit question (E2E)', () => {
     const accessToken = jwt.sign({ sub: user.id.toString() })
 
     const response = await request(app.getHttpServer())
-      .put(`/questions/${question.id.toString()}`)
+      .delete(`/questions/${question.id.toString()}`)
       .set('Authorization', `Bearer ${accessToken}`)
-      .send({
-        title: 'New question',
-        content: 'Question content',
-      })
+      .send()
 
-    expect(response.statusCode).toBe(200)
+    expect(response.statusCode).toBe(204)
 
     const questionOnDatabase = await prisma.client.question.findFirst({
       where: {
-        title: 'New question',
+        id: question.id.toString(),
       },
     })
 
-    expect(questionOnDatabase).toEqual(
-      expect.objectContaining({
-        id: question.id.toString(),
-        title: 'New question',
-        content: 'Question content',
-      }),
-    )
+    expect(questionOnDatabase).toBeFalsy()
   })
 })
