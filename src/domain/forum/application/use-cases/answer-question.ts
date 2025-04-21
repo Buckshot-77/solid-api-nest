@@ -3,6 +3,7 @@ import { Either, right } from '@/core/types/either'
 import { UniqueIdentifier } from '@/core/entities/value-objects/unique-identifier'
 import { Answer } from '@/domain/forum/enterprise/entities/answer'
 import { AnswersRepository } from '@/domain/forum/application/repositories/answers-repository'
+import { Injectable } from '@nestjs/common'
 
 interface AnswerQuestionUseCaseRequest {
   authorId: string
@@ -12,6 +13,7 @@ interface AnswerQuestionUseCaseRequest {
 
 type AnswerQuestionUseCaseResponse = Either<null, { answer: Answer }>
 
+@Injectable()
 export class AnswerQuestionUseCase {
   constructor(private readonly answersRepository: AnswersRepository) {}
   async execute({
