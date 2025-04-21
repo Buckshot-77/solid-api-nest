@@ -4,6 +4,7 @@ import { AnswersRepository } from '@/domain/forum/application/repositories/answe
 import { Answer } from '@/domain/forum/enterprise/entities/answer'
 
 import { PaginationError } from './errors/pagination-error'
+import { Injectable } from '@nestjs/common'
 
 interface FetchQuestionAnswersUseCaseRequest {
   page: number
@@ -18,6 +19,7 @@ type FetchQuestionAnswersUseCaseResponse = Either<
   }
 >
 
+@Injectable()
 export class FetchQuestionAnswersUseCase {
   constructor(private readonly answersRepository: AnswersRepository) {}
   private readonly MAX_PAGE_SIZE = 30
