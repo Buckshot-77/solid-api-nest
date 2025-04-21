@@ -10,6 +10,7 @@ import { AnswerAttachmentList } from '@/domain/forum/enterprise/entities/answer-
 import { ResourceNotFoundError } from '@/domain/forum/application/use-cases/errors/resource-not-found-error'
 import { NotAllowedError } from '@/domain/forum/application/use-cases/errors/not-allowed-error'
 import { AnswerAttachmentsRepository } from '../repositories/answer-attachments-repository'
+import { Injectable } from '@nestjs/common'
 
 export interface EditAnswerRequest {
   answerId: string
@@ -25,6 +26,7 @@ type EditAnswerResponse = Either<
   }
 >
 
+@Injectable()
 export class EditAnswerUseCase {
   constructor(
     private readonly answersRepository: AnswersRepository,
