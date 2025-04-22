@@ -4,6 +4,7 @@ import { AnswersRepository } from '@/domain/forum/application/repositories/answe
 
 import { ResourceNotFoundError } from './errors/resource-not-found-error'
 import { NotAllowedError } from './errors/not-allowed-error'
+import { Injectable } from '@nestjs/common'
 
 interface DeleteAnswerUseCaseRequest {
   answerId: string
@@ -15,6 +16,7 @@ type DeleteAnswerUseCaseResponse = Either<
   null
 >
 
+@Injectable()
 export class DeleteAnswerUseCase {
   constructor(private readonly answersRepository: AnswersRepository) {}
   async execute({
