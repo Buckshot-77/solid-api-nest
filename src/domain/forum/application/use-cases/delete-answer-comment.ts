@@ -4,6 +4,7 @@ import { AnswerCommentsRepository } from '@/domain/forum/application/repositorie
 
 import { ResourceNotFoundError } from './errors/resource-not-found-error'
 import { NotAllowedError } from './errors/not-allowed-error'
+import { Injectable } from '@nestjs/common'
 
 interface DeleteAnswerCommentUseCaseRequest {
   answerCommentId: string
@@ -15,6 +16,7 @@ type DeleteAnswerCommentUseCaseResponse = Either<
   null
 >
 
+@Injectable()
 export class DeleteAnswerCommentUseCase {
   constructor(
     private readonly answerCommentsRepository: AnswerCommentsRepository,
