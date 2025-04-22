@@ -3,6 +3,7 @@ import { Either, left, right } from '@/core/types/either'
 import { QuestionCommentsRepository } from '@/domain/forum/application/repositories/question-comments-repository'
 import { QuestionComment } from '@/domain/forum/enterprise/entities/question-comment'
 import { PaginationError } from './errors/pagination-error'
+import { Injectable } from '@nestjs/common'
 
 interface FetchQuestionCommentsUseCaseRequest {
   page: number
@@ -17,6 +18,7 @@ type FetchQuestionCommentsUseCaseResponse = Either<
   }
 >
 
+@Injectable()
 export class FetchQuestionCommentsUseCase {
   constructor(
     private readonly questionCommentsRepository: QuestionCommentsRepository,
