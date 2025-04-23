@@ -41,6 +41,7 @@ import { DeleteAnswerCommentController } from './controllers/delete-answer-comme
 import { DeleteAnswerCommentUseCase } from '@/domain/forum/application/use-cases/delete-answer-comment'
 import { ChooseBestAnswerController } from './controllers/choose-best-answer.controller'
 import { ChooseBestAnswerUseCase } from '@/domain/forum/application/use-cases/choose-best-answer'
+import { UploadAttachmentController } from './controllers/upload-attachment.controller'
 
 @Module({
   imports: [DatabaseModule, CryptographyModule],
@@ -63,6 +64,7 @@ import { ChooseBestAnswerUseCase } from '@/domain/forum/application/use-cases/ch
     DeleteQuestionCommentController,
     DeleteAnswerCommentController,
     ChooseBestAnswerController,
+    UploadAttachmentController,
   ],
   providers: [
     CreateQuestionUseCase,
