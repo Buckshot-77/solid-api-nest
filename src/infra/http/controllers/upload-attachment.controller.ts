@@ -1,6 +1,7 @@
 import {
   Controller,
   FileTypeValidator,
+  HttpCode,
   MaxFileSizeValidator,
   ParseFilePipe,
   Post,
@@ -12,6 +13,7 @@ import { FileInterceptor } from '@nestjs/platform-express'
 @Controller('/attachments')
 export class UploadAttachmentController {
   @Post()
+  @HttpCode(201)
   @UseInterceptors(FileInterceptor('file'))
   async handle(
     @UploadedFile(

@@ -33,23 +33,11 @@ describe('Upload attachments (E2E)', () => {
 
     const accessToken = jwt.sign({ sub: user.id.toString() })
 
-    await prisma.client.question.create({
-      data: {
-        title: 'Question 02',
-        slug: 'question-02',
-        content: 'Question content',
-        authorId: user.id.toString(),
-      },
-    })
-
     const response = await request(app.getHttpServer())
       .post('/attachments')
       .set('Authorization', `Bearer ${accessToken}`)
-      .send()
+      .attach('file', './src/test/fixtures/sample.webp')
 
-    expect(response.statusCode).toBe(200)
-    expect(response.body).toEqual({
-      question: expect.objectContaining({ title: 'Question 02' }),
-    })
+    expect(response.statusCode).toBe(201)
   })
 })
