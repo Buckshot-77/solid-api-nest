@@ -16,6 +16,8 @@ import { PrismaQuestionsRepository } from './prisma/repositories/prisma-question
 import { PrismaStudentsRepository } from './prisma/repositories/prisma-students-repository'
 
 import { PrismaService } from './prisma/prisma.service'
+import { AttachmentsRepository } from '@/domain/forum/application/repositories/attachments-repository'
+import { PrismaAttachmentsRepository } from './prisma/repositories/prisma-attachments-repository'
 
 const commonBetweenImportsAndExports = [
   PrismaService,
@@ -44,6 +46,7 @@ const commonBetweenImportsAndExports = [
     useClass: PrismaQuestionCommentsRepository,
   },
   { provide: AnswersRepository, useClass: PrismaAnswersRepository },
+  { provide: AttachmentsRepository, useClass: PrismaAttachmentsRepository },
 ]
 
 @Module({

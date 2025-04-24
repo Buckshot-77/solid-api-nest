@@ -37,13 +37,13 @@ describe('UploadAndCreateAttachment unit tests', () => {
   it('should return left if filetype is not in the list of allowed file types', async () => {
     const payload = {
       fileName: 'Test filename',
-      fileType: 'mp4',
+      fileType: 'video/mp4',
       body: Buffer.from('hello'),
     }
 
     const result = await uploadAndCreateAttachmentUseCase.execute(payload)
 
     expect(result.isLeft()).toBeTruthy()
-    expect(result.value).toEqual(new InvalidAttachmentTypeError('mp4'))
+    expect(result.value).toEqual(new InvalidAttachmentTypeError('video/mp4'))
   })
 })
