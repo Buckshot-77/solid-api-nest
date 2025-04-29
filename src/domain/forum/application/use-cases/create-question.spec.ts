@@ -31,4 +31,24 @@ describe('CreateQuestion unit tests', () => {
       question: inMemoryQuestionsRepository.questions[0],
     })
   })
+
+  it('should persist attachments when creating a new question', async () => {
+    const result = await createQuestionUseCase.execute({
+      authorId: '1',
+      title: 'Nova pergunta',
+      content: 'Conteúdo da pergunta',
+      attachmentIds: ['1', '2'],
+    })
+
+    const questionAttachmentIds =
+      inMemoryQuestionAttachmentsRepository.questionAttachments.map(
+        (questionAttachment) => questionAttachment.attachmentId.toString(),
+      )
+
+    expect(result.isRight()).toBe(true)
+    expect(
+      inMemoryQuestionAttachmentsRepository.questionAttachments,
+    ).toHaveLength(2)
+    expect(questionAttachmentIds).toEqual(expect.arrayContaining(['1', '2']))
+  })
 })

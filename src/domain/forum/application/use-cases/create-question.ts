@@ -38,12 +38,16 @@ export class CreateQuestionUseCase {
       updatedAt: new Date(),
     })
 
+    console.log(attachmentIds)
+
     const questionAttachments = attachmentIds.map((questionAttachmentId) => {
       return QuestionAttachment.create({
         attachmentId: new UniqueIdentifier(questionAttachmentId),
         questionId: question.id,
       })
     })
+
+    console.log(questionAttachments)
 
     question.attachments = new QuestionAttachmentList(questionAttachments)
 
